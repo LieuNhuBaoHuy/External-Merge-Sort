@@ -1,0 +1,50 @@
+﻿@{ Layout = null; }
+<!DOCTYPE html>
+<html>
+<head>
+    <title>External Merge Sort</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #fafafa; }
+        .card { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center; width: 350px; }
+        #drop-zone { border: 2px dashed #4349d1; border-radius: 15px; padding: 30px; margin-bottom: 20px; cursor: pointer; transition: 0.3s; }
+        #drop-zone:hover { background: #f0f1ff; }
+        .btn { background: #4349d1; color: white; border: none; padding: 12px 40px; border-radius: 25px; cursor: pointer; font-weight: bold; width: 100%; }
+        .link { color: #888; text-decoration: underline; font-size: 13px; display: inline-block; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Binary Processor</h2>
+        <div id="drop-zone" onclick="document.getElementById('fileInput').click()">
+            <img src="https://cdn-icons-png.flaticon.com/512/2989/2989976.png" width="40" style="opacity:0.5"><br>
+            <span id="txt">Drop .bin file here</span>
+            <input type="file" id="fileInput" hidden accept=".bin">
+        </div>
+        <button class="btn" id="btn">sort</button>
+        <a href="/Home/DownloadSample" class="link">get a testing file</a>
+    </div>
+
+    <script>
+        const f = document.getElementById('fileInput');
+        const b = document.getElementById('btn');
+        f.onchange = () => { if(f.files[0]) document.getElementById('txt').innerText = f.files[0].name; };
+
+        b.onclick = async () => {
+            if(!f.files[0]) return alert("Select file!");
+            b.innerText = "Sorting..."; b.disabled = true;
+            const fd = new FormData(); fd.append("file", f.files[0]);
+            try {
+                const r = await fetch('/Home/SortFile', { method: 'POST', body: fd });
+                if(r.ok) {
+                    const blob = await r.blob();
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = "sorted_" + f.files[0].name; a.click();
+                    b.innerText = "Done!";
+                } else alert("Error!");
+            } catch(e) { alert("Failed!"); }
+            finally { b.disabled = false; b.innerText = "sort"; }
+        };
+    </script>
+</body>
+</html>

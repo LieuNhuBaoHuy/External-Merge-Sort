@@ -1,0 +1,9 @@
+﻿  pch.cpp
+  dllmain.cpp
+  extsort.cpp
+  get_testing_sample.cpp
+  Generating Code...
+     Creating library D:\C++_SOLUTIONS\external_merge_sort_demo\x64\Debug\external_merge_sort_demo_library.lib and object D:\C++_SOLUTIONS\external_merge_sort_demo\x64\Debug\external_merge_sort_demo_library.exp
+  external_merge_sort_demo_library.vcxproj -> D:\C++_SOLUTIONS\external_merge_sort_demo\x64\Debug\external_merge_sort_demo_library.dll
+  'pwsh.exe' is not recognized as an internal or external command,
+  operable program or batch file.
